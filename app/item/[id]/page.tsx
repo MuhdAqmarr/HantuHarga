@@ -56,9 +56,8 @@ export default async function ItemPage({ params }: PageProps) {
   );
 
   if (statsError) {
-    console.error("get_price_stats RPC error:", JSON.stringify(statsError));
+    console.error("get_price_stats RPC error:", statsError);
   }
-  console.log("get_price_stats result:", JSON.stringify(statsArr));
 
   const stats = (statsArr?.[0] as PriceStats | undefined) || null;
   const hasData = stats && stats.observation_count > 0;
