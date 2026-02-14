@@ -48,7 +48,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
     <dialog
       ref={dialogRef}
       className={cn(
-        "backdrop:bg-black/70 bg-surface border border-border rounded-lg p-0 max-w-md w-[calc(100%-2rem)] shadow-2xl",
+        "backdrop:bg-black/70 bg-surface border border-border rounded-lg p-0 max-w-md w-[calc(100%-2rem)] shadow-2xl fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-0",
         className
       )}
       aria-labelledby="modal-title"
