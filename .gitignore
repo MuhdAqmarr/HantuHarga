@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnpm-debug.log*
+
+# next.js
+.next/
+out/
+
+# production
+build/
+
+# env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+.vercel
+
+# supabase
+supabase/.temp/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# claude
+.claude/
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

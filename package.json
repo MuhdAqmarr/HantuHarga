@@ -1,0 +1,55 @@
+{
+  "name": "hargahantu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Malaysian receipt-to-price-intelligence PWA",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "malaysia",
+    "price-tracker",
+    "pwa",
+    "receipt-scanner"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.2",
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.95.3",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "browser-image-compression": "^2.0.2",
+    "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.34.0",
+    "gsap": "^3.14.2",
+    "lucide-react": "^0.564.0",
+    "next": "^15.5.12",
+    "openai": "^6.22.0",
+    "postcss": "^8.5.6",
+    "react": "^19",
+    "react-dom": "^19",
+    "react-image-crop": "^11.0.10",
+    "sonner": "^2.0.7",
+    "tailwindcss": "^4.1.18",
+    "three": "^0.182.0",
+    "typescript": "^5.9.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@next/bundle-analyzer": "^16.1.6",
+    "@types/node": "^25.2.3",
+    "@types/three": "^0.182.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.6"
+  }
+}

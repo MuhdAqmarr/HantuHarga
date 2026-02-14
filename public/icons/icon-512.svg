@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0a0a0a"/>
+  <rect x="8" y="8" width="496" height="496" rx="56" fill="none" stroke="#00FF88" stroke-width="3" opacity="0.3"/>
+  <text x="256" y="200" font-family="monospace" font-size="150" font-weight="bold" fill="#00FF88" text-anchor="middle" dominant-baseline="middle">HH</text>
+  <text x="256" y="360" font-size="110" text-anchor="middle" dominant-baseline="middle">👻</text>
+</svg>
