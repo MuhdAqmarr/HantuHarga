@@ -2,7 +2,7 @@
 
 > **Community-powered price intel for Malaysia.**
 
-[![Deployed on Vercel](https://vercel.com/button)](https://hantuharga.vercel.app)
+[![Deployed on Vercel](https://vercel.com/button)](https://hantu-harga.vercel.app)
 
 Scan receipts. Track real grocery prices. Stop overpaying.
 
