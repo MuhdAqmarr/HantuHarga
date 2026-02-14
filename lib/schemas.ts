@@ -56,7 +56,7 @@ export const ExtractionResultSchema = z.object({
 });
 
 export const SubmitPayloadSchema = z.object({
-  temp_image_path: z.string().min(1),
+  temp_image_path: z.string().default(""),
   merchant_name: z.string().min(1).max(200),
   merchant_type: z
     .enum([

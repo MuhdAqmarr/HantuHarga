@@ -13,7 +13,13 @@ export const metadata: Metadata = {
     "Search real grocery prices across Malaysia. Community-verified price data.",
 };
 
-export default function SearchPage() {
+interface SearchPageProps {
+  searchParams: Promise<{ q?: string }>;
+}
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const { q } = await searchParams;
+
   return (
     <>
       <TopBar title="PRICE SEARCH" />
@@ -22,6 +28,7 @@ export default function SearchPage() {
           <SearchBar />
         </Suspense>
         <Suspense
+          key={q || "__browse"}
           fallback={
             <div className="space-y-3 pt-2">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -30,17 +37,67 @@ export default function SearchPage() {
             </div>
           }
         >
-          <SearchResults />
+          <SearchResults query={q} />
         </Suspense>
       </PageContainer>
     </>
   );
 }
 
-async function SearchResults() {
+async function SearchResults({ query }: { query?: string }) {
   const supabase = await createClient();
 
-  // Show popular items by default
+  if (query && query.trim().length > 0) {
+    // Search via trigram RPC
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc("search_items", {
+      p_query: query.trim(),
+      p_limit: 30,
+      p_offset: 0,
+    });
+
+    // Fallback to ILIKE if trigram not available
+    let items = data as { id: string; name: string; category: string; similarity: number }[] | null;
+    if (error || !items) {
+      const { data: fallback } = await supabase
+        .from("canonical_items")
+        .select("id, name, category")
+        .ilike("name", `%${query.trim()}%`)
+        .limit(30);
+      items = (fallback || []).map((i) => ({ ...i, similarity: 0 }));
+    }
+
+    if (!items || items.length === 0) {
+      return (
+        <div className="py-12 text-center">
+          <div className="font-mono text-sm text-text-muted">
+            [ NO RESULTS FOR &quot;{query}&quot; ]
+          </div>
+          <p className="text-text-secondary text-sm mt-2">
+            Try a different search term or scan a receipt to add new items.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-2 pt-2">
+        <div className="font-mono text-[10px] text-text-muted uppercase tracking-wider px-1">
+          Results for &quot;{query}&quot; ({items.length})
+        </div>
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            category={item.category}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  // No query — browse all items
   const { data: items } = await supabase
     .from("canonical_items")
     .select("id, name, category")

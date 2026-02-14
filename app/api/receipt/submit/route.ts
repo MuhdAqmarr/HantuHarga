@@ -107,27 +107,41 @@ export async function POST(request: Request) {
       );
 
       // Insert receipt item
-      await adminClient().from("receipt_items").insert({
-        receipt_id: receipt.id,
-        canonical_item_id: canonicalItemId,
-        raw: item.raw,
-        qty: item.qty,
-        unit_price: item.unit_price,
-        line_total: item.line_total,
-        confidence: item.confidence,
-      });
+      const { error: riError } = await adminClient()
+        .from("receipt_items")
+        .insert({
+          receipt_id: receipt.id,
+          canonical_item_id: canonicalItemId,
+          raw: item.raw,
+          qty: item.qty,
+          unit_price: item.unit_price,
+          line_total: item.line_total,
+          confidence: item.confidence,
+        });
+
+      if (riError) {
+        console.error("Receipt item insert error:", riError, item.canonical_name);
+        continue;
+      }
 
       // Insert price point (public, anonymized)
-      await adminClient().from("price_points").insert({
-        canonical_item_id: canonicalItemId,
-        merchant_id: merchantId,
-        area,
-        observed_date: receipt_date || new Date().toISOString().split("T")[0],
-        currency: "MYR",
-        unit_price: item.unit_price,
-        qty: item.qty,
-        confidence: item.confidence,
-      });
+      const { error: ppError } = await adminClient()
+        .from("price_points")
+        .insert({
+          canonical_item_id: canonicalItemId,
+          merchant_id: merchantId,
+          area,
+          observed_date: receipt_date || new Date().toISOString().split("T")[0],
+          currency: "MYR",
+          unit_price: item.unit_price,
+          qty: item.qty,
+          confidence: item.confidence,
+        });
+
+      if (ppError) {
+        console.error("Price point insert error:", ppError, item.canonical_name);
+        continue;
+      }
 
       pricePointsCreated++;
     }
