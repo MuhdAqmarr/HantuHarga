@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+interface BasketTemplate {
+  id: string;
+  user_id: string | null;
+  is_default: boolean;
+}
+
 export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -17,11 +23,14 @@ export async function DELETE(
   }
 
   // RLS handles ownership + is_default check, but let's give a clear error
-  const { data: template } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any)
     .from("basket_templates")
     .select("id, user_id, is_default")
     .eq("id", id)
     .single();
+
+  const template = data as BasketTemplate | null;
 
   if (!template) {
     return NextResponse.json({ error: "Template not found" }, { status: 404 });
@@ -41,7 +50,8 @@ export async function DELETE(
     );
   }
 
-  const { error } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase as any)
     .from("basket_templates")
     .delete()
     .eq("id", id);
