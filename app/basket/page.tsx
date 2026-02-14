@@ -524,7 +524,7 @@ function CreateTemplateModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-20 sm:pb-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -532,7 +532,7 @@ function CreateTemplateModal({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md mx-4 mb-4 sm:mb-0 bg-background border border-border rounded-xl shadow-xl max-h-[80vh] overflow-auto">
+      <div className="relative w-full max-w-md bg-background border border-border rounded-xl shadow-xl max-h-full overflow-auto">
         <div className="p-4 space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between">
