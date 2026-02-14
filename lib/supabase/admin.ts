@@ -6,7 +6,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 let _adminClient: SupabaseClient<any> | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getAdminClient(): SupabaseClient<any> {
+export function adminClient(): SupabaseClient<any> {
   if (!_adminClient) {
     _adminClient = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -21,11 +21,3 @@ export function getAdminClient(): SupabaseClient<any> {
   }
   return _adminClient;
 }
-
-// Keep backward-compatible named export (getter)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const adminClient: SupabaseClient<any> = new Proxy({} as SupabaseClient<any>, {
-  get(_target, prop, receiver) {
-    return Reflect.get(getAdminClient(), prop, receiver);
-  },
-});

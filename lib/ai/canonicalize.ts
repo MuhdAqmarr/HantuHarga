@@ -10,7 +10,7 @@ export async function findOrCreateCanonicalItem(
     .substring(0, 200);
 
   // Try trigram search for existing match
-  const { data: matches } = await adminClient.rpc("search_items", {
+  const { data: matches } = await adminClient().rpc("search_items", {
     p_query: normalizedName,
     p_limit: 1,
     p_offset: 0,
@@ -21,7 +21,7 @@ export async function findOrCreateCanonicalItem(
   }
 
   // No close match — upsert new canonical item
-  const { data: newItem } = await adminClient
+  const { data: newItem } = await adminClient()
     .from("canonical_items")
     .upsert(
       { name: normalizedName, category },
@@ -42,7 +42,7 @@ export async function findOrCreateMerchant(
   area: string,
   type: string = "unknown"
 ): Promise<string> {
-  const { data: merchant } = await adminClient
+  const { data: merchant } = await adminClient()
     .from("merchants")
     .upsert(
       { name: name.trim(), area, type },

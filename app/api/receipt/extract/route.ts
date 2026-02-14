@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const tempId = crypto.randomUUID();
     const tempPath = `temp/${tempId}.jpg`;
 
-    const { error: uploadError } = await adminClient.storage
+    const { error: uploadError } = await adminClient().storage
       .from("receipts-temp")
       .upload(tempPath, imageBuffer, {
         contentType: imageFile.type || "image/jpeg",

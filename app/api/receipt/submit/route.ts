@@ -45,13 +45,13 @@ export async function POST(request: Request) {
     // Move image from temp to permanent storage
     let permanentPath = "";
     if (temp_image_path) {
-      const { data: fileData } = await adminClient.storage
+      const { data: fileData } = await adminClient().storage
         .from("receipts-temp")
         .download(temp_image_path);
 
       if (fileData) {
         permanentPath = `${user.id}/${crypto.randomUUID()}.jpg`;
-        await adminClient.storage
+        await adminClient().storage
           .from("receipts")
           .upload(permanentPath, fileData, {
             contentType: "image/jpeg",
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
           });
 
         // Clean up temp
-        await adminClient.storage
+        await adminClient().storage
           .from("receipts-temp")
           .remove([temp_image_path]);
       }
@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     );
 
     // Insert receipt
-    const { data: receipt, error: receiptError } = await adminClient
+    const { data: receipt, error: receiptError } = await adminClient()
       .from("receipts")
       .insert({
         user_id: user.id,
@@ -107,7 +107,7 @@ export async function POST(request: Request) {
       );
 
       // Insert receipt item
-      await adminClient.from("receipt_items").insert({
+      await adminClient().from("receipt_items").insert({
         receipt_id: receipt.id,
         canonical_item_id: canonicalItemId,
         raw: item.raw,
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
       });
 
       // Insert price point (public, anonymized)
-      await adminClient.from("price_points").insert({
+      await adminClient().from("price_points").insert({
         canonical_item_id: canonicalItemId,
         merchant_id: merchantId,
         area,
