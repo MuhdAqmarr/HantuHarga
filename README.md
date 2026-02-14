@@ -6,6 +6,10 @@
 
 Scan receipts. Track real grocery prices. Stop overpaying.
 
+## Demo
+
+<video src="https://github.com/MuhdAqmarr/HantuHarga/raw/main/public/Video/HantuhargaCutted.mp4" controls width="100%"></video>
+
 Malaysians spend 30-40% of their income on groceries — but there's no easy way to know if you're overpaying. The same item can cost RM2 more at a different store just down the road.
 
 **HantuHarga** solves this by using AI (OpenAI GPT-4o) to extract every item and price from scanned receipts, crowdsourcing a live database so anyone can search, compare, and find the cheapest store in their area.
