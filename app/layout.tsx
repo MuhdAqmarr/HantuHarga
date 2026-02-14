@@ -61,7 +61,8 @@ export default function RootLayout({
   return (
     <html lang="ms" className={`${GeistPixelCircle.variable} ${sans.variable}`}>
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
+        <link rel="apple-touch-icon" href="/Logo.png" />
+        <link rel="icon" href="/Logo.png" type="image/png" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ReduceMotionProvider>
