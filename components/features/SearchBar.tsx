@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Search, X } from "lucide-react";
 
 export function SearchBar() {
@@ -10,34 +10,53 @@ export function SearchBar() {
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const navigate = useCallback(
+  // Read searchParams once per call via a ref to avoid re-render loops
+  const searchParamsRef = useRef(searchParams);
+  searchParamsRef.current = searchParams;
+
+  const debouncedNavigate = useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value.trim()) {
-        params.set("q", value.trim());
-      } else {
-        params.delete("q");
-      }
-      router.replace(`/search?${params.toString()}`);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        const params = new URLSearchParams(
+          searchParamsRef.current.toString()
+        );
+        if (value.trim()) {
+          params.set("q", value.trim());
+        } else {
+          params.delete("q");
+        }
+        params.delete("page"); // reset page on new search
+        router.replace(`/search?${params.toString()}`);
+      }, 300);
     },
-    [searchParams, router]
+    [router]
   );
 
-  useEffect(() => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => navigate(query), 300);
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, [query, navigate]);
+  const handleChange = useCallback(
+    (value: string) => {
+      setQuery(value);
+      debouncedNavigate(value);
+    },
+    [debouncedNavigate]
+  );
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (debounceRef.current) clearTimeout(debounceRef.current);
-      navigate(query);
+      const params = new URLSearchParams(
+        searchParamsRef.current.toString()
+      );
+      if (query.trim()) {
+        params.set("q", query.trim());
+      } else {
+        params.delete("q");
+      }
+      params.delete("page");
+      router.replace(`/search?${params.toString()}`);
     },
-    [query, navigate]
+    [query, router]
   );
 
   return (
@@ -51,7 +70,7 @@ export function SearchBar() {
         <input
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           placeholder="Search items... (telur, beras, minyak)"
           className="w-full h-10 pl-9 pr-9 rounded-md bg-surface border border-border text-text-primary font-mono text-sm placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-neon focus:border-neon"
           aria-label="Search grocery items"
@@ -60,7 +79,7 @@ export function SearchBar() {
         {query && (
           <button
             type="button"
-            onClick={() => setQuery("")}
+            onClick={() => handleChange("")}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
             aria-label="Clear search"
           >
