@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Search, Camera } from "lucide-react";
 import { LazyConstellation } from "@/components/three/LazyConstellation";
 
@@ -16,9 +17,14 @@ export default function HomePage() {
 
         <h1 className="text-4xl sm:text-5xl font-mono font-bold text-text-primary tracking-tight">
           Harga<span className="text-neon">Hantu</span>
-          <span className="inline-block ml-2 text-3xl" aria-hidden="true">
-            👻
-          </span>
+          <Image
+            src="/HeroIcon.png"
+            alt=""
+            width={40}
+            height={40}
+            className="inline-block ml-2 align-middle"
+            aria-hidden="true"
+          />
         </h1>
 
         <p className="text-text-secondary text-base leading-relaxed max-w-sm mx-auto">
