@@ -53,6 +53,17 @@ export default function HomePage() {
         <div className="pt-8 font-mono text-xs text-text-muted">
           Community-powered price intel for Malaysia
         </div>
+        <div className="pt-2 font-mono text-[10px] text-text-muted">
+          Built by{" "}
+          <a
+            href="https://maqmarx.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neon hover:underline"
+          >
+            maqmarx
+          </a>
+        </div>
       </div>
     </div>
   );
