@@ -8,7 +8,7 @@ Scan receipts. Track real grocery prices. Stop overpaying.
 
 ## Demo
 
-<video src="https://github.com/MuhdAqmarr/HantuHarga/raw/main/public/Video/HantuhargaCutted.mp4" controls width="100%"></video>
+[Watch Demo Video](https://github.com/MuhdAqmarr/HantuHarga/raw/main/public/Video/HantuhargaCutted.mp4)
 
 Malaysians spend 30-40% of their income on groceries — but there's no easy way to know if you're overpaying. The same item can cost RM2 more at a different store just down the road.
 
