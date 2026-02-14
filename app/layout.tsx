@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { NavBar } from "@/components/layout/NavBar";
 import { ReduceMotionProvider } from "@/components/ReduceMotionProvider";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
+import { InstallHint } from "@/components/InstallHint";
 import "./globals.css";
 
 const sans = Space_Grotesk({
@@ -82,6 +83,7 @@ export default function RootLayout({
               },
             }}
           />
+          <InstallHint />
           <ServiceWorkerRegistrar />
         </ReduceMotionProvider>
       </body>
