@@ -38,34 +38,40 @@ export default async function ItemPage({ params }: PageProps) {
   const { id } = await params;
   const supabase = await createClient();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: item } = await (supabase as any)
+  const { data: item, error: itemError } = await supabase
     .from("canonical_items")
     .select("id, name, category")
     .eq("id", id)
-    .single() as { data: { id: string; name: string; category: string } | null };
+    .single();
 
-  if (!item) notFound();
+  if (itemError || !item) {
+    console.error("Item fetch error:", itemError);
+    notFound();
+  }
 
   // Fetch stats
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: statsArr } = await (supabase as any).rpc("get_price_stats", {
-    p_canonical_item_id: id,
-    p_area: null,
-    p_days_back: 90,
-  });
+  const { data: statsArr, error: statsError } = await supabase.rpc(
+    "get_price_stats",
+    { p_canonical_item_id: id, p_days_back: 90 }
+  );
+
+  if (statsError) {
+    console.error("get_price_stats RPC error:", JSON.stringify(statsError));
+  }
+  console.log("get_price_stats result:", JSON.stringify(statsArr));
 
   const stats = (statsArr?.[0] as PriceStats | undefined) || null;
   const hasData = stats && stats.observation_count > 0;
 
   // Fetch cheapest merchants
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: merchants } = await (supabase as any).rpc("get_cheapest_merchants", {
-    p_canonical_item_id: id,
-    p_area: null,
-    p_days_back: 90,
-    p_limit: 5,
-  });
+  const { data: merchants, error: merchantsError } = await supabase.rpc(
+    "get_cheapest_merchants",
+    { p_canonical_item_id: id, p_days_back: 90, p_limit: 5 }
+  );
+
+  if (merchantsError) {
+    console.error("get_cheapest_merchants RPC error:", JSON.stringify(merchantsError));
+  }
 
   return (
     <>
