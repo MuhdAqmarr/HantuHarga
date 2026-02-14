@@ -148,6 +148,15 @@ body::after {
   background: var(--color-neon-dim);
 }
 
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Focus ring */
 :focus-visible {
   outline: 2px solid var(--color-neon);

@@ -229,6 +229,18 @@ export type Database = {
           similarity: number;
         }[];
       };
+      get_bulk_price_summary: {
+        Args: {
+          p_item_ids: string[];
+          p_days_back?: number;
+        };
+        Returns: {
+          canonical_item_id: string;
+          median_price: number;
+          latest_price: number;
+          observation_count: number;
+        }[];
+      };
       get_cheapest_merchants: {
         Args: {
           p_canonical_item_id: string;
