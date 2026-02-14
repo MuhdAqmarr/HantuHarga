@@ -1,16 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { GeistPixelCircle } from "geist/font/pixel";
+import { Space_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 import { NavBar } from "@/components/layout/NavBar";
 import { ReduceMotionProvider } from "@/components/ReduceMotionProvider";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
 import "./globals.css";
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
 
 const sans = Space_Grotesk({
   subsets: ["latin"],
@@ -64,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ms" className={`${mono.variable} ${sans.variable}`}>
+    <html lang="ms" className={`${GeistPixelCircle.variable} ${sans.variable}`}>
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
       </head>

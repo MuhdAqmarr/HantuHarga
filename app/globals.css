@@ -22,7 +22,7 @@
   --color-text-muted: #666666;
 
   /* Typography */
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-mono: var(--font-geist-pixel-circle), ui-monospace, SFMono-Regular, monospace;
   --font-sans: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
 
   /* Radius */
