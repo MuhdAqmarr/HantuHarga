@@ -30,8 +30,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       <PageContainer>
         <Suspense>
           <SearchBar />
-        </Suspense>
-        <Suspense>
           <CategoryFilter />
         </Suspense>
         <Suspense
