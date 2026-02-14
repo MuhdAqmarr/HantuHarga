@@ -4,7 +4,7 @@ const EXTRACTION_PROMPT = `You are a Malaysian receipt parser. Extract structure
 
 Return ONLY valid JSON (no markdown fences) with this exact structure:
 {
-  "merchant": { "name": "Store Name", "branch_hint": "Branch or null", "type": "speedmart|hypermarket|kedai|pasar|supermarket|convenience|unknown" },
+  "merchant": { "name": "Store Name", "branch_hint": "Branch or null", "address": "Full address from receipt header or null", "type": "speedmart|hypermarket|kedai|pasar|supermarket|convenience|unknown" },
   "receipt_date": "YYYY-MM-DD or null",
   "currency": "MYR",
   "items": [
@@ -28,6 +28,7 @@ Rules:
 - If qty is missing, default to 1
 - confidence: 0.0 to 1.0
 - Do NOT include payment info (card numbers etc.)
+- Extract the merchant address from the receipt header if present, otherwise set to null
 - Keep output concise`;
 
 export async function extractReceipt(

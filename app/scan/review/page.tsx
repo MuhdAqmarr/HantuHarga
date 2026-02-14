@@ -47,6 +47,11 @@ export default function ReviewPage() {
       setReceiptDate(data.receipt_date || "");
       setGrandTotal(data.totals?.grand_total || null);
 
+      // Pre-fill area from AI-extracted address, falling back to default
+      if (data.merchant?.address) {
+        setArea(data.merchant.address);
+      }
+
       // Convert extraction items to review items, sorted by confidence (low first)
       const reviewItems: ReviewItem[] = (data.items || [])
         .map((item: ReviewItem) => ({

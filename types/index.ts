@@ -73,6 +73,7 @@ export interface ExtractionResult {
   merchant: {
     name: string;
     branch_hint: string | null;
+    address: string | null;
     type: MerchantType;
   };
   receipt_date: string | null;
